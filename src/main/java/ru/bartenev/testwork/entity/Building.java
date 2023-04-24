@@ -31,7 +31,7 @@ public class Building {
     private Integer countEntrances;
     @NotNull
     private Boolean parking;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "building")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "building")
     private List<Apartment> apartments;
 
 }
