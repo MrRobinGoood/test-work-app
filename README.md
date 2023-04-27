@@ -64,13 +64,13 @@ sudo docker-compose up -d
 
 ### Вариант 1 - с запущенным сервером
 
-Протестировать test-work-app вы можете с помощью SwaggerHub по [ссылке](https://app.swaggerhub.com/apis/MROBINGOOOD/test-work-app-api/0.0.1#/), либо импортировав в ваш [SwaggerEditor](https://editor.swagger.io/) файл [openapi.yaml](https://github.com/MrRobinGoood/test-work-app/blob/master/openapi/openapi.yaml).
+Протестировать test-work-app вы можете с помощью SwaggerHub по [ссылке](https://app.swaggerhub.com/apis/MROBINGOOOD/test-work-app-api/0.0.1#/), либо импортировав в ваш [SwaggerEditor](https://editor.swagger.io/) файл [openapi-0.0.1.yaml](https://github.com/MrRobinGoood/test-work-app/blob/master/openapi/openapi-0.0.1.yaml).
 
 ### Вариант 2 - с локальными docker контейнерами
 
-Когда docker контейнеры успешно запущены, вы можете протестировать работу веб-сервиса в SwaggerHub по [ссылке](https://app.swaggerhub.com/apis/MROBINGOOOD/test-work-app-api/0.0.2) , либо средствами SwaggerEditor.
+Когда docker контейнеры успешно запущены, вы можете протестировать работу веб-сервиса в SwaggerHub по [ссылке](https://app.swaggerhub.com/apis/MROBINGOOOD/test-work-app-api/0.0.2), либо средствами SwaggerEditor.
 
-Для варианта с [SwaggerEditor](https://editor.swagger.io/) импортируйте файл [openapi.yaml](https://github.com/MrRobinGoood/test-work-app/blob/master/openapi/openapi.yaml) с описанием API, и в 7й строке замените значение ключа url на ```http://localhost:8081/```.
+Для варианта с [SwaggerEditor](https://editor.swagger.io/) импортируйте файл [openapi-0.0.2.yaml](https://github.com/MrRobinGoood/test-work-app/blob/master/openapi/openapi-0.0.2.yaml) с описанием API.
 
 ### Вариант 3 - с ручной сборкой проекта
 
