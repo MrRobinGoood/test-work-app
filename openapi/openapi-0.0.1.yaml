@@ -4,7 +4,7 @@ info:
   description: Test work for Digital Chief
   version: "0.0.1"
 servers:
-  - url: http://localhost:8081/
+  - url: http://178.170.193.201:8081/
 
 paths:
   /buildings:
