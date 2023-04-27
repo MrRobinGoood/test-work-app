@@ -1,0 +1,367 @@
+openapi: "3.0.2"
+info:
+  title: Test-work-app API
+  description: Test work for Digital Chief
+  version: 0.0.2
+servers:
+  - url: http://localhost:8081/
+
+paths:
+  /buildings:
+      get:
+        tags:
+          - Buildings
+        description: Get all buildings
+        operationId: getBuildings
+        summary: getBuildings
+        responses:
+          200:
+            $ref: '#/components/responses/Buildings'
+      post:
+        tags:
+          - Buildings
+        description: Create building
+        operationId: createBuilding
+        summary: createBuilding
+        requestBody:
+          $ref: "#/components/requestBodies/CreateBuilding"
+        responses:
+          200:
+            $ref: '#/components/responses/Building'
+          400:
+            $ref: '#/components/responses/InputValidationError'
+            
+  /buildings/{buildingId}:
+    get:
+      tags:
+        - Buildings
+      description: Get building by ID
+      operationId: getBuildingById
+      summary: getBuildingById
+      parameters:
+        - $ref: '#/components/parameters/BuildingPathId'
+      responses:
+        200:
+          $ref: '#/components/responses/Building'
+        404:
+          $ref: '#/components/responses/BuildingNotFoundError'
+
+    put:
+      tags:
+        - Buildings
+      description: Update building by ID
+      operationId: updateBuildingById
+      summary: updateBuildingById
+      parameters:
+        - $ref: '#/components/parameters/BuildingPathId'
+      requestBody:
+        $ref: "#/components/requestBodies/CreateBuilding"
+      responses:
+        200:
+          $ref: '#/components/responses/Building'
+        400:
+          $ref: '#/components/responses/InputValidationError'
+        404:
+          $ref: '#/components/responses/BuildingNotFoundError'
+
+    delete:
+      tags:
+        - Buildings
+      description: Delete building by ID
+      operationId: deleteBuildingById
+      summary: deleteBuildingById
+      parameters:
+        - $ref: '#/components/parameters/BuildingPathId'
+      responses:
+        200:
+          $ref: '#/components/responses/Building'
+        404:
+          $ref: '#/components/responses/BuildingNotFoundError'
+          
+  /buildings/apartments:
+    get:
+      tags:
+        - Apartments
+      description: Get all apartments
+      operationId: getApartments
+      summary: getApartments
+      responses:
+        200:
+          $ref: '#/components/responses/Apartments'
+          
+  /buildings/{buildingId}/apartments:
+    post:
+      tags:
+        - Apartments
+      description: Create apartment by building ID
+      operationId: createApartmentByBuildingId
+      summary: createApartmentByBuildingId
+      parameters:
+        - $ref: '#/components/parameters/BuildingPathId'
+      requestBody:
+        $ref: "#/components/requestBodies/CreateApartment"
+      responses:
+        200:
+          $ref: '#/components/responses/Apartment'
+        400:
+          $ref: '#/components/responses/InputValidationError'
+        404:
+          $ref: '#/components/responses/BuildingNotFoundError'
+  
+    get:
+      tags:
+        - Apartments
+      description: Get all apartments by building ID
+      operationId: getApartmentsByBuildingId
+      summary: getApartmentsByBuildingId
+      parameters:
+        - $ref: '#/components/parameters/BuildingPathId'
+      responses:
+        200:
+          $ref: '#/components/responses/Apartments'
+        404:
+          $ref: '#/components/responses/ApartmentNotFoundError'
+    
+  /buildings/apartments/{apartmentId}:
+    get:
+      tags:
+        - Apartments
+      description: Get apartment by apartment ID
+      operationId: getApartmentByApartmentId
+      summary: getApartmentByApartmentId
+      parameters:
+        - $ref: '#/components/parameters/ApartmentPathId'
+      responses:
+        200:
+          $ref: '#/components/responses/Apartment'
+        404:
+          $ref: '#/components/responses/ApartmentNotFoundError'
+          
+    put:
+      tags:
+        - Apartments
+      description: Update apartment by ID
+      operationId: updateApartmentByApartmentId
+      summary: updateApartmentByApartmentId
+      parameters:
+        - $ref: '#/components/parameters/ApartmentPathId'
+      requestBody:
+        $ref: "#/components/requestBodies/CreateApartment"
+      responses:
+        200:
+          $ref: '#/components/responses/Apartment'
+        400:
+          $ref: '#/components/responses/InputValidationError'
+        404:
+          $ref: '#/components/responses/ApartmentNotFoundError'
+
+    delete:
+      tags:
+        - Apartments
+      description: Delete apartment by ID
+      operationId: deleteApartmentByApartmentId
+      summary: deleteApartmentByApartmentId
+      parameters:
+        - $ref: '#/components/parameters/ApartmentPathId'
+      responses:
+        200:
+          $ref: '#/components/responses/Apartment'
+        404:
+          $ref: '#/components/responses/ApartmentNotFoundError'
+
+components:
+  parameters:
+    BuildingPathId:
+      name: buildingId
+      in: path
+      description: Building ID
+      required: true
+      schema:
+        type: integer
+        
+    ApartmentPathId:
+      name: apartmentId
+      in: path
+      description: Apartment ID
+      required: true
+      schema:
+        type: integer
+  
+  requestBodies:
+
+    CreateBuilding:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreateBuilding"
+            
+    CreateApartment:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CreateApartment"
+
+
+  responses:
+    
+    BuildingNotFoundError:
+      description: Building not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          
+    ApartmentNotFoundError:
+      description: Apartment not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    
+    InputValidationError:
+      description: Invalid input parameters
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    
+    Building:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Building"
+
+    Buildings:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Buildings"
+            
+    Apartment:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Apartment"
+
+    Apartments:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Apartments"
+
+  schemas:
+    Building:
+      type: object
+      properties:
+        buildingId:
+          type: integer
+          nullable: false
+      allOf:
+        - $ref: '#/components/schemas/CreateBuilding'
+      example:
+        buildingId: 1
+        address: "Ул.Красная Д.27"
+        dateConstructed: "2023-02-15"
+        countFloors: 17
+        countEntrances: 5
+        parking: True
+
+    Buildings:
+      type: array
+      items:
+        $ref: "#/components/schemas/Building"
+
+    CreateBuilding:
+      type: object
+      properties:
+        address:
+          type: string
+          nullable: false
+        dateConstructed:
+          type: string
+          nullable: false
+        countFloors:
+          type: integer
+          minimum: 1
+          nullable: false
+        countEntrances:
+          type: integer
+          minimum: 1
+          nullable: false
+        parking:
+          type: boolean
+          nullable: false
+      example:
+        address: "Ул.Красная Д.27"
+        dateConstructed: "2023-02-15"
+        countFloors: 17
+        countEntrances: 5
+        parking: True
+        
+    Apartment:
+      type: object
+      properties:
+        apartmentId:
+          type: integer
+          nullable: false
+        buildingId:
+          type: integer
+          nullable: false
+      allOf:
+        - $ref: '#/components/schemas/CreateBuilding'
+      example:
+        apartmentId: 1
+        buildingId: 1
+        area: 72.5
+        countRooms: 4
+        apartmentFloor: 7
+        renovation: черновая
+        price: 2500000
+        
+    Apartments:
+      type: array
+      items:
+        $ref: "#/components/schemas/Apartment"
+        
+    CreateApartment:
+      type: object
+      properties:
+        area:
+          type: number
+          format: double
+          nullable: false
+        countRooms:
+          type: integer
+          minimum: 1
+          nullable: false
+        apartmentFloor:
+          type: integer
+          nullable: false
+        renovation:
+          type: string
+          nullable: false
+        price:
+          type: integer
+          minimum: 1
+          nullable: false
+      example:
+        area: 72.5
+        countRooms: 4
+        apartmentFloor: 7
+        renovation: черновая
+        price: 2500000
+
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          nullable: false
+      example:
+        message: error.message
