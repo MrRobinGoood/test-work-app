@@ -27,7 +27,16 @@
 - SwaggerEditor 3.0.2
 
 ## Инструкция по запуску
-*Для тестирования работы test-work-app достаточно склонировать папку docker-compose со всеми включёнными в неё материалами, а также иметь установленный Docker в вашей системе, чтобы проинициализировать и запустить описанные в docker-compose.yml контейнеры.*
+Три рассматриваемых варианта запуска веб-сервиса test-work-app:
+### Вариант 1 - подключение к серверу
+
+Протестировать работу веб-сервиса можно на запущенном сервере. Для этого не нужно устанавливать и запускать допольнительного ПО, можно сразу перейти в раздел [OpenAPI](#использование-openapi) вариант 1.
+
+*Дополнительная информация: адрес и порт сервера 178.170.193.201:8081*
+
+### Вариант 2 - запуск docker контейнеров
+
+*Для тестирования работы test-work-app достаточно склонировать папку docker-compose со всеми включёнными в неё материалами, а также иметь установленный Docker и Docker-Compose в вашей системе, с поддержкой запуска Linux-контейнеров, чтобы проинициализировать и запустить описанные в docker-compose.yml контейнеры.*
 #### Пошагово:
 - Склонируйте папку [docker-compose](https://github.com/MrRobinGoood/test-work-app/tree/master/docker-compose), либо весь репозиторий.
 - Запустите Docker в вашей системе.
@@ -39,13 +48,33 @@ sudo docker-compose up -d
 ```
 Для того чтобы успешно прошло создание контейнера с базой данных, необходимо, чтобы в [docker-compose](https://github.com/MrRobinGoood/test-work-app/tree/master/docker-compose) находилась папка-зависимость [sql](https://github.com/MrRobinGoood/test-work-app/tree/master/docker-compose/sql), включающая в себя бэкап-файл инициализации бд [init.sql](https://github.com/MrRobinGoood/test-work-app/blob/master/docker-compose/sql/init.sql).
 
+*(Docker контейнеры сформированы под linux)*
+
+### Вариант 3 - самостоятельная сборка проекта
+
+#### Общий план действий:
+
+- Предварительно установить JRE для запуска Java
+- Склонировать репозиторий
+- В файле [application.properties](https://github.com/MrRobinGoood/test-work-app/blob/master/src/main/resources/application.properties) заменить значение spring.datasource.url на jdbc:postgresql://localhost:5432/RealEstate
+- Создать и запустить базу данных PostgreSQL 13, проинициализировав её бэкап-файлом [init.sql](https://github.com/MrRobinGoood/test-work-app/blob/master/docker-compose/sql/init.sql)
+- Запустить любым удобным способом файл [TestWorkApplication.java](https://github.com/MrRobinGoood/test-work-app/blob/master/src/main/java/ru/bartenev/testwork/TestWorkApplication.java)
+
 ## Использование OpenAPI
 
-Когда docker контейнеры успешно запущены, вы можете протестировать работу веб-сервиса средствами SwaggerEditor.
+### Вариант 1 - с запущенным сервером
 
-Файл [openapi.yaml](https://github.com/MrRobinGoood/test-work-app/blob/master/openapi/openapi.yaml) с описанием API.
+Протестировать test-work-app вы можете с помощью SwaggerHub по [ссылке](https://app.swaggerhub.com/apis/MROBINGOOOD/test-work-app-api/0.0.1#/), либо импортировав в ваш [SwaggerEditor](https://editor.swagger.io/) файл [openapi.yaml](https://github.com/MrRobinGoood/test-work-app/blob/master/openapi/openapi.yaml).
 
-*Достаточно вставить содержимое файла в SwaggerEditor для отображения OpenAPI.*
+### Вариант 2 - с локальными docker контейнерами
+
+Когда docker контейнеры успешно запущены, вы можете протестировать работу веб-сервиса в SwaggerHub по [ссылке](https://app.swaggerhub.com/apis/MROBINGOOOD/test-work-app-api/0.0.2) , либо средствами SwaggerEditor.
+
+Для варианта с [SwaggerEditor](https://editor.swagger.io/) импортируйте файл [openapi.yaml](https://github.com/MrRobinGoood/test-work-app/blob/master/openapi/openapi.yaml) с описанием API, и в 7й строке замените значение ключа url на ```http://localhost:8081/```.
+
+### Вариант 3 - с ручной сборкой проекта
+
+Использование OpenAPI с самостоятельной сборкой проекта повторяет те же действия, что и в варианте 2 с локальными docker контейнерами.
 
 ## Описание предметной области
 
